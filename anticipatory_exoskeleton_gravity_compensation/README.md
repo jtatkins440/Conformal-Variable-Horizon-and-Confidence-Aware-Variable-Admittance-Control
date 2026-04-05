@@ -5,7 +5,7 @@ This ROS1 Noetic workspace contains the code used for anticipatory exoskeleton g
 
 ## Core Python Modules and Packages
 - **admit/**: Implements core admittance control that uses inputs from robot_policy for providing assistance. Includes Python nodes for the admittance controller.
-- **robot_policy/**: Contains antigravity policy logic used to compute assistive torque or force commands.
+- **robot_policy/**: Contains anticipitory gravity compensation policy logic used to compute assistive torque or force commands.
 - **predict_eval/**: Contains prediction and evaluation code for implimenting CVH-CaVA's variation for exoskeleton assisstance.
 - **classification/**: Implements motion intention directional classification.
 - **gui/**: Provides the graphical user interface and subject information collection tools used during experiments.
