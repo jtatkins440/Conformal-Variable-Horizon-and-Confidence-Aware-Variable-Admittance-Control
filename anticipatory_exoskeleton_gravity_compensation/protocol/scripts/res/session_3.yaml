@@ -1,0 +1,64 @@
+3:
+  0:
+    case:
+      label: Dynamic Gravity Compensation
+      prefix_label: ''
+      running: true
+      use_dynamic_compensation: true
+      use_gravity_compensation: true
+    session: &id006
+      label: Default
+      ptp_time: 3.0
+      trial_number_per_block: 3
+      wait_time: 7.0
+    session_label: Default
+    trial_index:
+    - 0
+    - 1
+    - 2
+    trials:
+    - &id008
+      - &id003
+        - 70.0
+        - -40.0
+      - &id001
+        - 80.0
+        - -10.0
+      - &id002
+        - 60.0
+        - -40.0
+      - *id001
+      - *id002
+    - &id009
+      - *id003
+      - &id004
+        - 60.0
+        - -10.0
+      - *id002
+      - *id001
+      - &id005
+        - 80.0
+        - -40.0
+    - &id007
+      - *id003
+      - *id004
+      - *id005
+      - *id001
+      - *id002
+  1:
+    case:
+      label: Static Gravity Compensation
+      prefix_label: ''
+      running: true
+      use_dynamic_compensation: false
+      use_gravity_compensation: true
+    session: *id006
+    session_label: Default
+    trial_index:
+    - 0
+    - 1
+    - 2
+    trials:
+    - *id007
+    - *id008
+    - *id009

@@ -1,0 +1,8 @@
+<launch>
+	<rosparam file="$(find conf_exps)/config/guide_config.yaml" />
+	<remap from="set_guide_time" to="guide/set_guide_time"/>
+    	<remap from="start_guiding" to="guide/start_guiding"/>
+	<remap from="update_targets" to="guide/update_targets"/>
+
+    	<node name="guide_node" pkg="conf_exps" type="guide_node.py" output="screen"/>
+</launch>

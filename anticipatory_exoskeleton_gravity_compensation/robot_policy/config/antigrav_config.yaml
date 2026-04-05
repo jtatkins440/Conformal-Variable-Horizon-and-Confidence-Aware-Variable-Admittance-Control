@@ -1,0 +1,5 @@
+antigrav/pos_dim: 2
+antigrav/dt: 0.004
+antigrav/nominal_mass: 10.0 #kg
+antigrav/center_of_mass: [0.0, 0.14, 0.0] #m, in base frame (0,0,0) has robot pointing along y-axis.
+antigrav/support_ratio: 0.4 # percent of total we aim to support

@@ -1,0 +1,4 @@
+float64[] curr_joint
+float64[] next_pose
+---
+float64[] next_joint

@@ -1,0 +1,11 @@
+pred_eval/pos_dim: 2
+pred_eval/dt: 0.004
+pred_eval/conformal_set_type: "radial"
+
+pred_eval/window_steps: 240
+pred_eval/horizon_steps: 120
+pred_eval/down_sample_interval: 12
+pred_eval/aci_alphas: [0.1]
+pred_eval/aci_step_sizes: [0.0, 0.001]
+pred_eval/aci_window_length: 100
+pred_eval/safe_pos_error_level: 20.0 # IN DEGREES

@@ -1,0 +1,6 @@
+<launch>
+    	<rosparam file="$(find predict_eval)/config/predict_eval_config.yaml" />
+    	<arg name="model_path" default="$(find predict_eval)/config"/>
+    	<rosparam param="pred_eval/predict_model_path" subst_value="True">$(arg model_path)/Var_lag21.pkl</rosparam>
+    	<node name="pred_eval" pkg="predict_eval" type="predict_eval_node.py" output="screen"/>
+</launch>

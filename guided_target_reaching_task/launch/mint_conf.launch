@@ -1,0 +1,10 @@
+<launch>
+    	<rosparam file="$(find conf_exps)/config/mint_conf_config.yaml" />
+    	
+    	<remap from="set_running_behavior" to="mint/set_running_behavior"/>
+    	<remap from="set_fixed_setpoint" to="mint/set_fixed_setpoint"/>
+    	<remap from="set_use_variable_setpoint" to="mint/set_use_variable_setpoint"/>
+    	<remap from="trigger_get_opt_step_sizes" to="mint/trigger_get_opt_step_sizes"/>
+    	
+    	<node name="mint_conf" pkg="conf_exps" type="mint_conf.py" output="screen"/>
+</launch>

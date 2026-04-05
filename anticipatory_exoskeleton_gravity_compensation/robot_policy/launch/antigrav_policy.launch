@@ -1,0 +1,5 @@
+<launch>
+    	<rosparam file="$(find robot_policy)/config/antigrav_config.yaml" />
+    	
+    	<node name="robot_policy" pkg="robot_policy" type="antigrav_policy.py" output="screen"/>
+</launch>

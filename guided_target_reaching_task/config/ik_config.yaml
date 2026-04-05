@@ -1,0 +1,12 @@
+/ik/joint_bounds_lower_deg: [-170.0, -120.0, -170.0, -120.0, -170.0, -120.0, -175.0]
+/ik/joint_bounds_upper_deg: [170.0, 120.0, -170.0, -120.0, 170.0, 120.0, 175.0]
+/ik/joint_bounds_velocity_deg: 25.0
+/ik/joint_num: 7
+/ik/use_sampled_joints_for_ik_guess: false
+/ik/initial_joint_angles: [-1.5708, 1.5708, 0.0, 1.5708, 0.0, -1.5708, -0.958709]
+
+/ik/dh_alpha: [1.5708, -1.5708, -1.5708, 1.5708, 1.5708, -1.5708, 0.0]
+/ik/dh_a: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0] 
+/ik/dh_d: [0.36, 0.0, 0.42, 0.0, 0.4, 0.0, 0.081001]
+
+/ik/rate: 200.0 #250.0

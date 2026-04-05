@@ -1,0 +1,4 @@
+<launch>
+	<rosparam file="$(find conf_exps)/config/logger_config.yaml" />
+    <node name="trial_data_logger_node" pkg="conf_exps" type="general_logger.py" output="screen"/>
+</launch>

@@ -1,0 +1,14 @@
+<launch>
+	<rosparam file="$(find conf_exps)/config/sm_config.yaml" />
+	<remap from="admit/set_running_behavior" to="ad_mint/admit/set_running_behavior"/>
+    	<remap from="admit/set_admittance_controller_behavior" to="ad_mint/admit/set_admittance_controller_behavior"/>
+    	<remap from="admit/set_holding_behavior" to="ad_mint/admit/set_holding_behavior"/>	
+	<remap from="admit/trigger_user_intent_bounds" to="ad_mint/admit/trigger_user_intent_bounds"/>
+
+    	<remap from="mint/set_running_behavior" to="ad_mint/mint/set_running_behavior"/>
+    	<remap from="mint/set_fixed_setpoint" to="ad_mint/mint/set_fixed_setpoint"/>
+    	<remap from="mint/set_use_variable_setpoint" to="ad_mint/mint/set_use_variable_setpoint"/>
+    	<remap from="mint/trigger_get_opt_step_sizes" to="ad_mint/mint/trigger_get_opt_step_sizes"/>
+    	
+    	<node name="exp_sm" pkg="conf_exps" type="exp_state_machine.py" output="screen"/>
+</launch>

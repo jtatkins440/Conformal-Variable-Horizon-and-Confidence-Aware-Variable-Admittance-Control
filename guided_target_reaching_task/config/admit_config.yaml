@@ -1,0 +1,57 @@
+admit/pos_dim: 2
+admit/eq_lead_time: 0.200
+admit/dt: 0.005
+
+# static admittance parameters
+admit/static/I: 15.0 #20.0
+admit/static/B: 55.0
+admit/holding/K: 150.0
+
+# user intent parameters
+admit/user_intent/B_low: -15.0 # this means it jumps back up to 10.0 after it hits zero!
+admit/user_intent/B_high: 55.0
+admit/user_intent/Kp_low: 0.0
+admit/user_intent/Kp_high: 300.0
+admit/user_intent/Kd_low: 0.0
+admit/user_intent/Kd_high: 0.0
+admit/user_intent/s_sen: 0.95
+admit/user_intent/r_slope: 150.0 #75.0
+admit/user_intent/delta_offset: 3.0
+admit/user_intent/min_user_intent_range: -0.5
+admit/user_intent/max_user_intent_range: 0.5
+admit/user_intent/user_intent_bound_mult: 1.0
+
+# LOW means low confidence here. expect more conservative values
+admit/conf/B_low: 55.0
+admit/conf/B_high: 0.0
+admit/conf/Kp_low: 0.0
+admit/conf/Kp_high: 150.0 
+admit/conf/Kd_low: 0.0
+admit/conf/Kd_high: 50.0
+admit/conf/confidence_gain_speed: 2.5 
+
+# LOW means low confidence here. expect more conservative values
+admit/conf_user_intent/B_low: 60.0
+admit/conf_user_intent/B_high: 20.0
+admit/conf_user_intent/Kp_low: 0.0
+admit/conf_user_intent/Kp_high: 200.0 
+admit/conf_user_intent/Kd_low: 0.0
+admit/conf_user_intent/Kd_high: 200.0 
+admit/conf_user_intent/s_sen: 0.95
+admit/conf_user_intent/min_user_intent_range: -0.5
+admit/conf_user_intent/max_user_intent_range: 0.5 
+
+safety/pos_bound: 0.14 
+safety/vel_max: 0.35 
+safety/acc_max: 1.5
+safety/eq_pos_max: 0.080 
+safety/eq_pos_threshold: 0.005 
+safety/eq_vel_max: 1.0
+safety/t_eq_min: 0.003 
+safety/measured_force_min: 2.0
+safety/force_max: 50.0 
+
+filter/order: 3 
+filter/critical_freq: 20.0 
+filter/exp_gain_speed: 2.0 
+

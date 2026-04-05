@@ -1,0 +1,24 @@
+guide_plot/symbol_size: 30 
+guide_plot/line_width: 6 
+guide_plot/x_range: [-0.14, 0.14]
+guide_plot/y_range: [-0.14, 0.14]
+guide_plot/display_equilibrium: false 
+guide_plot/display_prediction: false 
+guide_plot/shift_prediction: false 
+guide_plot/display_quantiles: false 
+
+bar/max_vis_error: 0.08
+bar/zero_error_rgba_color: [0.0, 255.0, 0.0, 50.0]
+bar/max_error_rgba_color: [255.0, 0.0, 0.0, 255.0]
+bar/x_range: [-0.005, 0.015]
+bar/y_range: [0, 0.1]
+
+arrows/display_arrows: true
+arrows/length: 0.025
+arrows/head_half_width: 0.003
+arrows/head_heigth: 0.008
+arrows/line_width: 4
+
+timer/text_font_size: 16
+timer/clock_font_size: 32
+timer/text_color: "#000000"

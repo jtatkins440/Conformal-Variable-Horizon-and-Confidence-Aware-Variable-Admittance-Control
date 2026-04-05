@@ -1,0 +1,4 @@
+<launch>
+    	<rosparam file="$(find protocol)/config/protocol_config.yaml" />
+    	<node name="protocol" pkg="protocol" type="protocol_controller.py" output="screen"/>
+</launch>

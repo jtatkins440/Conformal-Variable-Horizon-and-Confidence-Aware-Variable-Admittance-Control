@@ -1,0 +1,6 @@
+<launch>
+  <group ns="iiwa">
+  	<rosparam file="$(find conf_exps)/config/ik_config.yaml" />
+    <node pkg="conf_exps" type="ik_node" name="ik_node" output="screen"/>
+  </group>
+</launch>

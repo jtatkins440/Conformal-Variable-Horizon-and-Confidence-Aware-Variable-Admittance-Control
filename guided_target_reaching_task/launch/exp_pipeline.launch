@@ -1,0 +1,22 @@
+<launch>
+
+	<group ns="ad_mint">
+		<remap from="desired_state" to="/iiwa/admit_state"/>
+		<remap from="torque_force_sensor_state" to="/sensor_values"/>
+
+		<include file="$(find conf_exps)/launch/admit.launch"/>
+		<include file="$(find conf_exps)/launch/mint_conf.launch"/>
+	</group>
+	
+	<include file="$(find conf_exps)/launch/ik.launch"/>
+	
+	<remap from="admit_record_state" to="ad_mint/admit_record_state"/>
+	<remap from="mint_conf_record_state" to="ad_mint/mint_conf_record_state"/>
+	
+	<include file="$(find conf_exps)/launch/quantile_server.launch"/>
+	
+	<include file="$(find conf_exps)/launch/vis_conf.launch"/>
+	<include file="$(find conf_exps)/launch/guide.launch"/>
+	<include file="$(find conf_exps)/launch/general_logger.launch"/>
+	
+</launch>

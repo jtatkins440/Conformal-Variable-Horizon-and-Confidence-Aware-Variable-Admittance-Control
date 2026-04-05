@@ -1,0 +1,4 @@
+<launch>
+	<rosparam file="$(find conf_exps)/config/viz_config.yaml" />
+    	<node name="gui_node" pkg="conf_exps" type="gui_node_pyqt.py" output="screen"/>
+</launch>

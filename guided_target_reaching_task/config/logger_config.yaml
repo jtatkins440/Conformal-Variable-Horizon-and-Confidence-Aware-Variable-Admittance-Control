@@ -1,0 +1,3 @@
+trial_data_logger/save_dir: "/home/user/mint_vic_ws/conf_exp_data"
+trial_data_logger/exp_name: "NN_Conf"
+

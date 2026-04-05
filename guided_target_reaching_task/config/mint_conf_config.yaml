@@ -1,0 +1,35 @@
+pos_channels: [0, 2] # x and z
+vel_min: 0.01
+
+# model type options. 
+mint/model_is_cond: False
+mint/model_is_vel: False 
+mint/model_is_double_cond: False
+mint/model_is_guide_cond: False
+mint/model_is_double_cond_acc: True
+
+# model name
+mint/model_name: "mint_dcond_acc_guide_robust_100hz_60_s" 
+
+# hyperparameters for model's wrapper class
+mint/t_eq_min: 0.001 # if below this, assume it should be zero
+mint/pos_eq_guide_mag: 0.025
+mint/vel_eq_guide_mag: 0.050
+
+# confiedence and ACI hyperparameters
+confidence/alphas: 0.25 
+confidence/tau_const: 1.0
+
+confidence/safe_eq_error_threshold: 0.010
+confidence/safe_var_time_eq_scalar: 1.0 
+confidence/score_buffer_size: 200 
+confidence/score_avg_window: 100 
+confidence/aci/step_sizes: [0.0, 0.001] 
+confidence/aci/window_length: 100 
+confidence/aci/max_step_size: 0.01
+
+# smoothing filter hyperparameters
+filter/order: 4 
+filter/critical_freq: 10.0 
+filter/exp_alpha: 0.2 
+

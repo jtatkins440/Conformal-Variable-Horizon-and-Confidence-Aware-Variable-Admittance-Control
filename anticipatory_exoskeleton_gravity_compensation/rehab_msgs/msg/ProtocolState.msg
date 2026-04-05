@@ -1,0 +1,6 @@
+Header header
+
+geometry_msgs/Vector3 starting_position
+geometry_msgs/Vector3 goal_position
+string behavior_label
+float64 countdown_time

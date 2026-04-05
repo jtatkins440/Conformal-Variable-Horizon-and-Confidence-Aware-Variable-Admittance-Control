@@ -1,0 +1,9 @@
+string experiment_name
+string sub_experiment_name
+int32 subject_num
+int32 session_idx
+int32 block_idx
+int32 trial_num
+---
+bool success
+string message

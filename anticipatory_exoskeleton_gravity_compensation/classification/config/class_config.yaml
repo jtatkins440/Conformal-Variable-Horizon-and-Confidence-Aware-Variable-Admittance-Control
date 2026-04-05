@@ -1,0 +1,4 @@
+class/pos_dim: 2
+class/dt: 0.004
+class/conformal_set_type: "radial"
+class/input_len: 250

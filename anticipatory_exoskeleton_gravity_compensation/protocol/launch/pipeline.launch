@@ -1,0 +1,28 @@
+<launch>
+    	<arg name="data" default="$(find protocol)/DATA"/>
+    	<rosparam param="data_dir" subst_value="True">$(arg data)</rosparam>
+    	
+	<remap from="torque_force_sensor_state" to="/ft_raw"/>
+	<remap from="torque_force_robot_state" to="/wrench_robot"/>
+	<remap from="rpy_command" to="/motor_ctrl/rpy_command"/>
+	<remap from="req_state" to="/motor_ctrl/req_state"/>
+	
+	<include file="$(find admit)/launch/admit.launch"/>
+	
+	<remap from="current_state" to="rpy_state"/>
+	<include file="$(find predict_eval)/launch/predict_eval.launch"/>
+	
+	<remap from="predicted_state_sets" to="conf_set_traj"/>
+	<include file="$(find classification)/launch/classifier.launch"/>
+	
+	<remap from="classifier_output" to="classifier_output"/>
+	<include file="$(find robot_policy)/launch/antigrav_policy.launch"/>
+	
+	<remap from="current_state" to="rpy_state"/>
+	<remap from="predicted_state_sets" to="conf_set_traj"/>
+	<remap from="torque_force_sensor_state" to="/ft_raw"/>
+	<remap from="torque_force_robot_state" to="/wrench_robot"/>
+	<include file="$(find gui)/launch/gui.launch"/>
+
+	<include file="$(find hardware_interface)/launch/hw_launch.launch"/>
+</launch>

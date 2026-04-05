@@ -1,0 +1,6 @@
+#string calibration_directory
+---
+bool success
+string message
+float64 user_intent_min
+float64 user_intent_max

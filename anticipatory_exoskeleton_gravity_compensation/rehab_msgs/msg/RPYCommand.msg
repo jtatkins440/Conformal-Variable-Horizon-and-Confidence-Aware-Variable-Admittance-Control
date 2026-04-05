@@ -1,0 +1,5 @@
+float64 commandedThetaPerturb
+float64 commandedPhiPerturb
+float64 theta
+float64 phi
+float64 psi

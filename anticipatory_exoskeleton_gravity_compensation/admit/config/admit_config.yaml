@@ -1,0 +1,14 @@
+admit/pos_dim: 2
+admit/dt: 0.004
+
+admit/static/I: 0.01 #15.0 #20.0
+admit/static/B: 0.03 #55.0
+
+admit/init/pos: [-80.0, -45.0, 70.0] #[90.0, 0.0]
+admit/init/vel: [0.0, 0.0, 0.0]
+
+safety/vel_max: 30.0 # DEGREES PER SECOND
+safety/acc_max: 55.0 # DEGREES PER SECOND SQUARED
+
+safety/force_max: 50.0 # #50.0 in Newtons
+safety/fix_roll: true # #50.0 in Newtons

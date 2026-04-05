@@ -1,0 +1,10 @@
+<launch>
+    	<rosparam file="$(find conf_exps)/config/admit_config.yaml" />
+    	
+    	<remap from="set_running_behavior" to="admit/set_running_behavior"/>
+    	<remap from="set_admittance_controller_behavior" to="admit/set_admittance_controller_behavior"/>
+    	<remap from="set_holding_behavior" to="admit/set_holding_behavior"/>
+	<remap from="trigger_user_intent_bounds" to="admit/trigger_user_intent_bounds"/>
+    	
+    	<node name="admit" pkg="conf_exps" type="admit.py" output="screen"/>
+</launch>

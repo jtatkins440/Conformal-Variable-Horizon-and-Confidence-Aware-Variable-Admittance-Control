@@ -1,0 +1,10 @@
+#string calibration_directory
+float64 alpha
+int64 input_window_length
+int64 avg_window_size
+int64 half_coverage_window
+float64 max_gamma
+---
+bool success
+string message
+float64[] step_sizes

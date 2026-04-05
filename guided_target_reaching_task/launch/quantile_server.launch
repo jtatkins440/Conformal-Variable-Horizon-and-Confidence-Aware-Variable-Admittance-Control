@@ -1,0 +1,4 @@
+<launch>
+	<param name="default_trial_type" type="string" value="SAC No Assistance"/>
+	<node name="quantile_server" pkg="conf_exps" type="quantile_server.py" output="screen"/>
+</launch>

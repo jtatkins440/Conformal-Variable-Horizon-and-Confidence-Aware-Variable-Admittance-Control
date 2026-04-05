@@ -1,0 +1,8 @@
+string experiment_name
+string subject_name
+string trial_type
+float64[] alphas # array of alpahs for computing each quantile
+---
+bool success
+string message
+std_msgs/Float64MultiArray icp_quantiles

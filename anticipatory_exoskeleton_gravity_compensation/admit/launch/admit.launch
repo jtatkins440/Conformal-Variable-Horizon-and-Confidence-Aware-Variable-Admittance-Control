@@ -1,0 +1,5 @@
+<launch>
+    	<rosparam file="$(find admit)/config/admit_config.yaml" />
+    	
+    	<node name="admit" pkg="admit" type="admit_controller.py" output="screen"/>
+</launch>

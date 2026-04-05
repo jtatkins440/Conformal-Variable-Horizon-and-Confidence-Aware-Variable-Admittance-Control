@@ -1,0 +1,1087 @@
+0:
+  0:
+    case: &id008
+      ac_type: 1
+      fixed_time_horizon: 0.0
+      label: SAC No Assistance
+      prefix_label: ''
+      running: true
+      trial_time_length: 3.0
+      use_var_time: false
+    session_label: Slow
+    session_trial_time: 5.0
+    trial_index:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    trials:
+    - &id001
+      - - 0.0
+        - 0.0
+      - - -0.096
+        - 0.08199999999999999
+      - - -0.002
+        - -0.07
+      - - 0.07
+        - -0.061
+      - - -0.034
+        - 0.098
+      - - 0.0
+        - 0.0
+    - &id003
+      - - 0.0
+        - 0.0
+      - - 0.06
+        - 0.08
+      - - -0.05
+        - -0.07
+      - - 0.08
+        - -0.09
+      - - -0.01
+        - 0.08
+      - - 0.0
+        - 0.0
+    - *id001
+    - &id006
+      - - 0.0
+        - 0.0
+      - - -0.064
+        - 0.055999999999999994
+      - - -0.011000000000000001
+        - -0.096
+      - - 0.047
+        - 0.087
+      - - -0.08900000000000001
+        - 0.098
+      - - 0.0
+        - 0.0
+    - &id007
+      - - 0.0
+        - 0.0
+      - - -0.064
+        - 0.055999999999999994
+      - - -0.011000000000000001
+        - -0.096
+      - - 0.047
+        - 0.087
+      - - -0.08900000000000001
+        - 0.098
+      - - 0.0
+        - 0.0
+    - &id002
+      - - 0.0
+        - 0.0
+      - - 0.096
+        - 0.084
+      - - 0.002
+        - -0.038
+      - - -0.07
+        - -0.069
+      - - 0.034
+        - 0.09699999999999999
+      - - 0.0
+        - 0.0
+    - &id005
+      - - 0.0
+        - 0.0
+      - - -0.099
+        - 0.08199999999999999
+      - - -0.036000000000000004
+        - -0.07
+      - - -0.086
+        - -0.061
+      - - 0.051
+        - 0.098
+      - - 0.0
+        - 0.0
+    - *id002
+    - *id003
+    - &id004
+      - - 0.0
+        - 0.0
+      - - -0.096
+        - 0.08199999999999999
+      - - -0.002
+        - -0.07
+      - - 0.07
+        - -0.061
+      - - -0.034
+        - 0.098
+      - - 0.0
+        - 0.0
+  1:
+    case: &id013
+      ac_type: 3
+      fixed_time_horizon: 0.3
+      label: C-VAC Long Fixed Window
+      prefix_label: ''
+      running: true
+      trial_time_length: 3.0
+      use_var_time: false
+    session_label: Slow
+    session_trial_time: 5.0
+    trial_index:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    trials:
+    - *id002
+    - *id001
+    - *id001
+    - *id004
+    - *id005
+    - *id003
+    - *id003
+    - *id006
+    - *id007
+    - *id002
+  2:
+    case: &id009
+      ac_type: 3
+      fixed_time_horizon: 0.0
+      label: C-VAC Zero Fixed Window
+      prefix_label: ''
+      running: true
+      trial_time_length: 3.0
+      use_var_time: false
+    session_label: Slow
+    session_trial_time: 5.0
+    trial_index:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    trials:
+    - *id003
+    - *id002
+    - *id007
+    - *id001
+    - *id004
+    - *id005
+    - *id003
+    - *id002
+    - *id001
+    - *id006
+  3:
+    case: &id015
+      ac_type: 2
+      fixed_time_horizon: 0.0
+      label: UI-VAC Zero Fixed Window
+      prefix_label: ''
+      running: true
+      trial_time_length: 3.0
+      use_var_time: false
+    session_label: Slow
+    session_trial_time: 5.0
+    trial_index:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    trials:
+    - *id003
+    - *id002
+    - *id003
+    - *id005
+    - *id006
+    - *id001
+    - *id002
+    - *id004
+    - *id007
+    - *id001
+  4:
+    case: &id011
+      ac_type: 2
+      fixed_time_horizon: 0.0
+      label: UI-VAC Variable Window
+      prefix_label: ''
+      running: true
+      trial_time_length: 3.0
+      use_var_time: true
+    session_label: Slow
+    session_trial_time: 5.0
+    trial_index:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    trials:
+    - *id003
+    - *id003
+    - *id004
+    - *id001
+    - *id005
+    - *id007
+    - *id002
+    - *id002
+    - *id006
+    - *id001
+  5:
+    case: &id014
+      ac_type: 2
+      fixed_time_horizon: 0.3
+      label: UI-VAC Long Fixed Window
+      prefix_label: ''
+      running: true
+      trial_time_length: 3.0
+      use_var_time: false
+    session_label: Slow
+    session_trial_time: 5.0
+    trial_index:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    trials:
+    - *id003
+    - *id002
+    - *id001
+    - *id003
+    - *id006
+    - *id005
+    - *id004
+    - *id001
+    - *id007
+    - *id002
+  6:
+    case: &id012
+      ac_type: 3
+      fixed_time_horizon: 0.15
+      label: C-VAC Short Fixed Window
+      prefix_label: ''
+      running: true
+      trial_time_length: 3.0
+      use_var_time: false
+    session_label: Slow
+    session_trial_time: 5.0
+    trial_index:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    trials:
+    - *id004
+    - *id002
+    - *id001
+    - *id001
+    - *id007
+    - *id003
+    - *id005
+    - *id003
+    - *id006
+    - *id002
+  7:
+    case: &id010
+      ac_type: 2
+      fixed_time_horizon: 0.15
+      label: UI-VAC Short Fixed Window
+      prefix_label: ''
+      running: true
+      trial_time_length: 3.0
+      use_var_time: false
+    session_label: Slow
+    session_trial_time: 5.0
+    trial_index:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    trials:
+    - *id007
+    - *id001
+    - *id003
+    - *id003
+    - *id006
+    - *id005
+    - *id002
+    - *id002
+    - *id001
+    - *id004
+  8:
+    case: &id016
+      ac_type: 3
+      fixed_time_horizon: 0.0
+      label: C-VAC Variable Window
+      prefix_label: ''
+      running: true
+      trial_time_length: 3.0
+      use_var_time: true
+    session_label: Slow
+    session_trial_time: 5.0
+    trial_index:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    trials:
+    - *id003
+    - *id002
+    - *id001
+    - *id006
+    - *id002
+    - *id001
+    - *id003
+    - *id005
+    - *id007
+    - *id004
+1:
+  0:
+    case: *id008
+    session_label: Slow
+    session_trial_time: 5.0
+    trial_index:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    trials:
+    - *id001
+    - *id002
+    - *id002
+    - *id007
+    - *id001
+    - *id005
+    - *id003
+    - *id004
+    - *id003
+    - *id006
+  1:
+    case: *id009
+    session_label: Slow
+    session_trial_time: 5.0
+    trial_index:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    trials:
+    - *id001
+    - *id005
+    - *id002
+    - *id001
+    - *id007
+    - *id002
+    - *id004
+    - *id003
+    - *id003
+    - *id006
+  2:
+    case: *id010
+    session_label: Slow
+    session_trial_time: 5.0
+    trial_index:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    trials:
+    - *id003
+    - *id002
+    - *id004
+    - *id007
+    - *id005
+    - *id006
+    - *id001
+    - *id001
+    - *id002
+    - *id003
+  3:
+    case: *id011
+    session_label: Slow
+    session_trial_time: 5.0
+    trial_index:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    trials:
+    - *id007
+    - *id004
+    - *id003
+    - *id002
+    - *id005
+    - *id002
+    - *id006
+    - *id003
+    - *id001
+    - *id001
+  4:
+    case: *id012
+    session_label: Slow
+    session_trial_time: 5.0
+    trial_index:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    trials:
+    - *id003
+    - *id006
+    - *id007
+    - *id001
+    - *id005
+    - *id003
+    - *id002
+    - *id001
+    - *id004
+    - *id002
+  5:
+    case: *id013
+    session_label: Slow
+    session_trial_time: 5.0
+    trial_index:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    trials:
+    - *id002
+    - *id006
+    - *id007
+    - *id001
+    - *id003
+    - *id004
+    - *id002
+    - *id005
+    - *id003
+    - *id001
+  6:
+    case: *id014
+    session_label: Slow
+    session_trial_time: 5.0
+    trial_index:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    trials:
+    - *id005
+    - *id001
+    - *id006
+    - *id002
+    - *id002
+    - *id003
+    - *id003
+    - *id007
+    - *id004
+    - *id001
+  7:
+    case: *id015
+    session_label: Slow
+    session_trial_time: 5.0
+    trial_index:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    trials:
+    - *id002
+    - *id004
+    - *id003
+    - *id001
+    - *id003
+    - *id007
+    - *id001
+    - *id006
+    - *id002
+    - *id005
+  8:
+    case: *id016
+    session_label: Slow
+    session_trial_time: 5.0
+    trial_index:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    trials:
+    - *id002
+    - *id006
+    - *id003
+    - *id001
+    - *id003
+    - *id005
+    - *id004
+    - *id007
+    - *id002
+    - *id001
+2:
+  0:
+    case: *id008
+    session_label: Fast
+    session_trial_time: 3.0
+    trial_index:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    trials:
+    - *id003
+    - *id007
+    - *id001
+    - *id003
+    - *id005
+    - *id004
+    - *id001
+    - *id002
+    - *id006
+    - *id002
+  1:
+    case: *id010
+    session_label: Fast
+    session_trial_time: 3.0
+    trial_index:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    trials:
+    - *id006
+    - *id003
+    - *id005
+    - *id004
+    - *id002
+    - *id002
+    - *id007
+    - *id003
+    - *id001
+    - *id001
+  2:
+    case: *id014
+    session_label: Fast
+    session_trial_time: 3.0
+    trial_index:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    trials:
+    - *id001
+    - *id002
+    - *id001
+    - *id002
+    - *id003
+    - *id007
+    - *id004
+    - *id005
+    - *id006
+    - *id003
+  3:
+    case: *id009
+    session_label: Fast
+    session_trial_time: 3.0
+    trial_index:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    trials:
+    - *id005
+    - *id003
+    - *id001
+    - *id004
+    - *id007
+    - *id002
+    - *id001
+    - *id002
+    - *id006
+    - *id003
+  4:
+    case: *id015
+    session_label: Fast
+    session_trial_time: 3.0
+    trial_index:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    trials:
+    - *id005
+    - *id001
+    - *id006
+    - *id001
+    - *id003
+    - *id004
+    - *id007
+    - *id002
+    - *id002
+    - *id003
+  5:
+    case: *id013
+    session_label: Fast
+    session_trial_time: 3.0
+    trial_index:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    trials:
+    - *id001
+    - *id002
+    - *id003
+    - *id007
+    - *id001
+    - *id006
+    - *id004
+    - *id005
+    - *id002
+    - *id003
+  6:
+    case: *id012
+    session_label: Fast
+    session_trial_time: 3.0
+    trial_index:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    trials:
+    - *id001
+    - *id005
+    - *id001
+    - *id002
+    - *id007
+    - *id003
+    - *id006
+    - *id002
+    - *id004
+    - *id003
+  7:
+    case: *id011
+    session_label: Fast
+    session_trial_time: 3.0
+    trial_index:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    trials:
+    - *id004
+    - *id007
+    - *id006
+    - *id001
+    - *id002
+    - *id001
+    - *id003
+    - *id002
+    - *id005
+    - *id003
+  8:
+    case: *id016
+    session_label: Fast
+    session_trial_time: 3.0
+    trial_index:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    trials:
+    - *id007
+    - *id005
+    - *id003
+    - *id001
+    - *id001
+    - *id002
+    - *id003
+    - *id004
+    - *id006
+    - *id002
+3:
+  0:
+    case: *id008
+    session_label: Fast
+    session_trial_time: 3.0
+    trial_index:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    trials:
+    - *id004
+    - *id003
+    - *id001
+    - *id001
+    - *id007
+    - *id002
+    - *id003
+    - *id002
+    - *id005
+    - *id006
+  1:
+    case: *id014
+    session_label: Fast
+    session_trial_time: 3.0
+    trial_index:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    trials:
+    - *id001
+    - *id002
+    - *id004
+    - *id005
+    - *id006
+    - *id003
+    - *id001
+    - *id003
+    - *id002
+    - *id007
+  2:
+    case: *id009
+    session_label: Fast
+    session_trial_time: 3.0
+    trial_index:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    trials:
+    - *id001
+    - *id001
+    - *id007
+    - *id002
+    - *id002
+    - *id006
+    - *id005
+    - *id004
+    - *id003
+    - *id003
+  3:
+    case: *id011
+    session_label: Fast
+    session_trial_time: 3.0
+    trial_index:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    trials:
+    - *id002
+    - *id003
+    - *id005
+    - *id004
+    - *id003
+    - *id001
+    - *id006
+    - *id007
+    - *id002
+    - *id001
+  4:
+    case: *id015
+    session_label: Fast
+    session_trial_time: 3.0
+    trial_index:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    trials:
+    - *id002
+    - *id002
+    - *id007
+    - *id003
+    - *id004
+    - *id003
+    - *id006
+    - *id005
+    - *id001
+    - *id001
+  5:
+    case: *id012
+    session_label: Fast
+    session_trial_time: 3.0
+    trial_index:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    trials:
+    - *id005
+    - *id004
+    - *id003
+    - *id002
+    - *id002
+    - *id001
+    - *id006
+    - *id007
+    - *id003
+    - *id001
+  6:
+    case: *id016
+    session_label: Fast
+    session_trial_time: 3.0
+    trial_index:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    trials:
+    - *id005
+    - *id002
+    - *id004
+    - *id007
+    - *id006
+    - *id002
+    - *id001
+    - *id001
+    - *id003
+    - *id003
+  7:
+    case: *id010
+    session_label: Fast
+    session_trial_time: 3.0
+    trial_index:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    trials:
+    - *id003
+    - *id001
+    - *id002
+    - *id004
+    - *id002
+    - *id006
+    - *id005
+    - *id001
+    - *id003
+    - *id007
+  8:
+    case: *id013
+    session_label: Fast
+    session_trial_time: 3.0
+    trial_index:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    trials:
+    - *id007
+    - *id001
+    - *id002
+    - *id002
+    - *id006
+    - *id003
+    - *id001
+    - *id005
+    - *id003
+    - *id004

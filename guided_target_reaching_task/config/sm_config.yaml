@@ -1,0 +1,3 @@
+pretrial_close_threshold: 0.02
+endtrial_close_threshold: 0.03
+exp_name: "NN_Conf_AAN"

@@ -1,0 +1,28 @@
+data:
+  data_feature: 1
+  folder_path: /Users/hwangseunghoon/Desktop/Research/SCH Project/code/Ankle Injury
+    Risk Prediction/TaskClass_data_re/
+  test_size_ratio: 0.15
+  train_size_ratio: 0.7
+  val_size_ratio: 0.15
+  variable_num: 4
+model:
+  input_channels: 4
+  kernel_size1: 5
+  kernel_size2: 5
+  maxabs_scaling:
+  num_classes: 2
+  out_channels1: 64
+  out_channels2: 128
+  same_padding: false
+  type: TimeSeriesCNN
+  window_size: 250
+  MaxAbsScale: [70.0502544, 71.50293061, 236.94526474, 264.02764082]
+training:
+  batch_size: 128
+  criterion: CrossEntropyLoss
+  early_stopping:
+    patience: 10
+  learning_rate: 0.001
+  num_epochs: 500
+  optimizer: Adam

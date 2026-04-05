@@ -1,0 +1,6 @@
+<launch>
+    	<rosparam file="$(find gui)/config/gui_config.yaml" />
+
+    	<node name="info_collector" pkg="gui" type="info_collector.py" output="screen"/>
+		<node name="gui" pkg="gui" type="GravityCompGui.py" output="screen"/>
+</launch>

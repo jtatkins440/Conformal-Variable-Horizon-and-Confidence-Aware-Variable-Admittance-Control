@@ -1,0 +1,3 @@
+float32 ad_value
+float32 md_value
+float32 pd_value
