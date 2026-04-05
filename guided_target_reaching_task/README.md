@@ -28,11 +28,11 @@ Configuration files are located in the `config/` directory:
 - `sm_config.yaml`: State machine configuration
 - `logger_config.yaml`: Data logging options
 
-Note that all the key hyperparameters needed for replicating the experiment as described in the Methods section are stored in 'admit_config.yaml' and 'mint_conf_config.yaml'. Other config files are related to implimentation details and are not required for understanding the method.
+Note that all the key hyperparameters needed for replicating the experiment as described in the Methods section are stored in `admit_config.yaml` and `mint_conf_config.yaml`. Other config files are related to implimentation details and are not required for understanding the method.
 
 ## Nodes
 - **admit.py**: Python node for variable admittance control. Impliments the passive admittance control (PAC), User-Intention Variable Admittance Control (UIVAC), and Confidence-aware Variable Admittance Control (CaVA). Uses 'admit_config.yaml' for defining settings.
-- **mint_conf.py**: Node for handling the motion intention prediction, adaptive conformal inference, and confidence calulcation based on settings from 'mint_conf_config.yaml'.
+- **mint_conf.py**: Node for handling the motion intention prediction, adaptive conformal inference, and confidence calulcation based on settings from `mint_conf_config.yaml`.
 - **quantile_server.py**: Conformal set processing server.
 - **exp_state_machine.py**: Experiment state machine for implimenting experimental protocol
 - **general_logger.py**: Data logging node to hdf5 files

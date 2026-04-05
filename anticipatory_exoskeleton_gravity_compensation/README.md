@@ -23,7 +23,7 @@ This ROS1 Noetic workspace contains the code used for anticipatory exoskeleton g
 
 ## Usage
 ### Launching the System
-- Full pre-experiment dependices on startup: `roslaunch protocol pipeline.launch` (use 'roslaunch protocol pipeline_no_hardware.launch' to run without the hardware_interface package)
+- Full pre-experiment dependices on startup: `roslaunch protocol pipeline.launch` (use `roslaunch protocol pipeline_no_hardware.launch` to run without the hardware_interface package)
 - Full experiment dependices on startup: `roslaunch protocol protocol.launch`
 
 ## Configuration
@@ -36,12 +36,12 @@ Configuration files are located in each package `config/` directory.
 
 ## Nodes and Scripts
 - **admit/scripts/admit_controller.py**: Admittance control node implementing anticipatory and gravity compensation behaviors
+- **robot_policy/scripts/antigrav_policy.py**: Anticipitory gravity compensation logic based on CVH-CaVA policy designed for exposkeleton assistance
 - **classification/scripts/classifier.py**: Motion intent classification node
 - **gui/scripts/GravityCompGui.py**: PyQt-based graphical interface for subjects and experiment monitoring
 - **gui/scripts/info_collector.py**: Information collection utilities for subject/session data
 - **protocol/scripts/protocol_controller.py**: High-level experiment state and protocol management node
 - **protocol/scripts/session_generator.py**: Trial/session generation utilities
-- **robot_policy/scripts/antigrav_policy.py**: Antigravity policy logic used by the system
 
 ## Custom Messages
 - **rehab_msgs/**: Custom ROS message and service definitions used by the hardware interface and experiment packages.
