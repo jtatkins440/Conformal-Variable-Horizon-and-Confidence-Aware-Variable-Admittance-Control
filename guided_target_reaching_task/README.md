@@ -13,6 +13,8 @@ This ROS1 Melodic package provides the code used to impliment the Guided Target-
 - Python: numpy, scipy, numba, PyQt5, PyTorch, hdf5 for Python, and sklearn.
 - ROS packages: smach
 
+Note that this package was designed to work with the iiwa_ros (https://github.com/epfl-lasa/iiwa_ros) repo which is not included here. 
+
 ## Usage
 ### Launching the System
 - Pre-experiment pipeline for startup: `roslaunch conf_exps exp_pipeline.launch`
