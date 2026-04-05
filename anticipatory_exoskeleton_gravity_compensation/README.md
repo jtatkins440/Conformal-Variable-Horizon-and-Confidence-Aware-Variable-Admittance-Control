@@ -40,7 +40,7 @@ Configuration files are located in each package `config/` directory.
 - **gui/scripts/GravityCompGui.py**: PyQt-based graphical interface for subjects and experiment monitoring
 - **gui/scripts/info_collector.py**: Information collection utilities for subject/session data
 - **protocol/scripts/protocol_controller.py**: High-level experiment state and protocol management node
-- **protocol/scripts/session_generator*.py**: Trial/session generation utilities
+- **protocol/scripts/session_generator.py**: Trial/session generation utilities
 - **robot_policy/scripts/antigrav_policy.py**: Antigravity policy logic used by the system
 
 ## Custom Messages

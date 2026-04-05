@@ -1,5 +1,7 @@
 # Conformal Variable-Horizon and Confidence-Aware Variable Admittance Control for Physical Human-Robot Interaction
 
+<img src="./docs/img/overview.png" width="600">
+
 This repository contains two separate ROS-based experiment packages used to generate the results for the paper Conformal Variable-Horizon and Confidence-Aware Variable Admittance Control for Physical Human-Robot Interaction:
 
 - `guided_target_reaching_task/`: A ROS1 Melodic package for guided target-reaching experiments.
