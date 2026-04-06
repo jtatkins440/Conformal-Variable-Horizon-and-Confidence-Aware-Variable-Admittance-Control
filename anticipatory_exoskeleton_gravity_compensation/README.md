@@ -3,6 +3,18 @@
 ## Overview
 This ROS1 Noetic workspace contains the code used for anticipatory exoskeleton gravity compensation experiment. It includes ROS packages for variable admittance control, intention classification, user motion prediction and confidence evaluation, GUI support, experiment protocol management, and custom message definitions.
 
+<<<<<<< HEAD
+=======
+## Core Python Modules and Packages
+- **admit/**: Implements core admittance control that uses inputs from robot_policy for providing assistance. Includes Python nodes for the admittance controller.
+- **robot_policy/**: Contains anticipitory gravity compensation policy logic used to compute assistive torque or force commands.
+- **predict_eval/**: Contains prediction and evaluation code for implimenting CVH-CaVA's variation for exoskeleton assisstance.
+- **classification/**: Implements motion intention directional classification.
+- **gui/**: Provides the graphical user interface and subject information collection tools used during experiments.
+- **protocol/**: Contains experiment protocol controllers and session generation utilities for running predefined trials.
+- **rehab_msgs/**: Defines custom ROS messages and services.
+
+>>>>>>> f1e31be886c80d6204ea11961ff9ac21244767fa
 ## Dependencies
 - ROS1 Noetic
 - Python: numpy, scipy, pandas, numba, statsmodels, scikit-learn, pyqtgraph, PyQt5, h5py
