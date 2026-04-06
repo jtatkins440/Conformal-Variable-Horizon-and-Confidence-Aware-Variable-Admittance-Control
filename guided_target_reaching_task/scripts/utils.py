@@ -203,9 +203,6 @@ class LiveFilter:
     """Base class for live filters.
     """
     def process(self, x):
-        # do not process NaNs
-        #if np.isnan(x):
-        #    return x
 
         return self._process(x)
 
@@ -270,7 +267,6 @@ class BoundAndFilter(object):
                 new_value, _ = bound_scalar_mag(new_value, self.mag_bound)
             if self.diff_bound is not None:
                 new_value, _ = bound_scalar_mag(new_value, self.diff_bound, scalar_mean = self.filter.getLastFileredValue())
-            #return self.filter.process(new_value)
         else:
             if self.box_bound is not None:
                 new_value, _ = bound_vector_box(new_value, self.box_bound)
@@ -386,22 +382,21 @@ def compute_miscoverage_array_njit(score_array, quantiles_array):
     return miscoverage_counts.reshape([miscoverage_counts.shape[0]] + list(quantiles_array.shape))
 
 # ASSUMES quantiles is flat!
-@numba.njit(cache = cache_option) #(numba.float64[:,:](numba.float64[:], numba.float64[:]))
+@numba.njit(cache = cache_option)
 def compute_miscoverage_njit(score_array, quantiles):
     miscoverage_counts = np.zeros(shape=(score_array.shape[0], quantiles.shape[0]))
     for q_idx in range(quantiles.shape[0]):
         miscoverage_counts[:, q_idx] = (quantiles[q_idx] < score_array[:]).astype(np.float64)
     return miscoverage_counts
 
-@numba.njit(cache = cache_option) #(numba.float64(numba.float64[:], numba.float64[:]))
+@numba.njit(cache = cache_option)
 def compute_average_miscoverage_njit(score_array, quantiles_array):
     miscoverage_counts = compute_miscoverage_njit(score_array, quantiles_array)
-    return float(np.mean(miscoverage_counts)) # returns (len(alphas)) or (len(gammas), len(alphas))
+    return float(np.mean(miscoverage_counts))
 
 @numba.njit(cache = cache_option)
 def update_alphas_from_miscoverage_njit(miscoverage_array, current_alphas, target_alphas, step_sizes):
     new_alphas = current_alphas + step_sizes * (target_alphas - miscoverage_array)
-    #new_alphas = current_alphas + step_sizes * (target_alphas - miscoverage_array * np.ones(shape=(target_alphas.shape[0])))
     return new_alphas
 
 # assumes scores is a single numpy array, the other terms should not have a time dim!
@@ -418,7 +413,7 @@ def update_alphas_and_quantiles_njit(scores, current_alphas, current_quantiles, 
     output = List()
     output.append(current_alphas)
     output.append(current_quantiles)
-    return output #List(current_alphas, current_quantiles)
+    return output 
 
 # assumes scores is a typed list (List)
 @numba.njit(cache = cache_option)

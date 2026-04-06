@@ -5,7 +5,7 @@ This ROS1 Melodic package provides the code used to impliment the Guided Target-
 
 ## Core Python Modules
 - **admit_lib.py**: Python module that implements core admittance control and motion prediction functionality. Includes neural network models for motion intention prediction, JIT-compiled admittance controllers, impedance policies, variable admittance update rules for UIVAC and CaVA, adaptive conformal prediction helper, and model inference wrappers for trajectory prediction.
-- **utils.py**: Python module providing JIT-compiled conformal prediction fuctnions and utility functions for data processing. Includes ROS message packing/unpacking, timing and waiting functions, safety bounding for vectors and scalars, live filtering classes, curvature computation helpers, conformal prediction algorithms, and miscellaneous helper routines used throughout the project.
+- **utils.py**: Python module providing JIT-compiled conformal prediction functions and utility functions for data processing. Includes ROS message packing/unpacking, timing and waiting functions, safety bounding for vectors and scalars, live filtering classes, curvature computation helpers, conformal prediction algorithms, and miscellaneous helper routines used throughout the project.
 
 ## Dependencies
 - ROS1 Melodic

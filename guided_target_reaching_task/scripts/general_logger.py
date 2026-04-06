@@ -27,10 +27,6 @@ class SyncDataLogger:
         rospy.Service('start_logging', StartLogging, self.handle_start_logging)
         rospy.Service('stop_logging', Trigger, self.handle_stop_logging)
 
-        #self.home_directory = Path(str(rospy.get_param("trial_data_logger/save_dir"))) # UNUSED
-        #self.experiment_name = str(rospy.get_param("trial_data_logger/exp_name"))
-        #print(f"logger node: \nroot saving path is {self.home_directory} \nexperiment name is {self.experiment_name}")
-
         self.logged_items = {
             'elapsed_time': None,
             'ee_pose' : None,
@@ -135,16 +131,7 @@ class SyncDataLogger:
         # Determine the directory based on trial type and method
         try:
             ## 1. create the folder for logging if it doesn't exist
-            '''
-            current_directory = os.path.dirname(os.path.abspath(__file__))
-            parent_directory, _ = os.path.split(current_directory)
-            data_directory = os.path.join(parent_directory, 'DATA')
-            experiment_directory = os.path.join(data_directory, exp_name) # save this one and on
-            subject_directory = os.path.join(experiment_directory, f'subject_{str(subject_idx)}')
-            sub_experiment_directory = os.path.join(subject_directory, exp_type) # save this one and on
-            session_directory = os.path.join(sub_experiment_directory, f'session_{str(s_idx)}')
-            block_directory = os.path.join(session_directory, f'block_{str(b_idx)}')
-            '''
+
             current_directory = os.path.dirname(os.path.abspath(__file__))
             parent_directory, _ = os.path.split(current_directory)
             data_directory = os.path.join(parent_directory, 'DATA')
@@ -155,15 +142,6 @@ class SyncDataLogger:
             block_directory = os.path.join(session_directory, f'block_{str(req.block_idx)}')
 
             # Create directories if they don't exist
-            '''
-            for directory in [data_directory, experiment_directory, sub_experiment_directory, subject_directory, session_directory, block_directory]:
-                print(f"checking directory {directory}...")
-                if not os.path.exists(directory):
-                    os.makedirs(directory)
-                    print(f"created {directory}!")
-                    os.chmod(directory, 0o777)  # Set full permissions
-            '''
-            
             ## 2. create the file handle to the trial
             trial_file_path = os.path.join(block_directory, f'trial_{str(req.trial_num)}.h5')
             self.file_handle = h5py.File(trial_file_path, 'w')
@@ -267,7 +245,6 @@ class SyncDataLogger:
     def main(self):
         logger_rate = 200.0
         logger_dt = (1.0 / logger_rate)
-        #rate = rospy.Rate(200) # 200Hz
         
         while not rospy.is_shutdown():
             start_time = time.time()
@@ -278,115 +255,3 @@ class SyncDataLogger:
 if __name__ == '__main__':
     logger = SyncDataLogger()
     logger.main()
-
-
-    '''
-    def recordStateCallback(self, msg):
-        # start with the easy ones
-
-        self.logged_items['ee_pose'] = [msg.pose.position.x, msg.pose.position.y, msg.pose.position.z,
-                                msg.pose.orientation.x, msg.pose.orientation.y,
-                                msg.pose.orientation.z, msg.pose.orientation.w]
-        self.logged_items['ee_vel'] = [msg.twist.linear.x, msg.twist.linear.y, msg.twist.linear.z,
-                        msg.twist.angular.x, msg.twist.angular.y, msg.twist.angular.z]
-        self.logged_items['ee_acc'] = [msg.accel.linear.x, msg.accel.linear.y, msg.accel.linear.z,
-                        msg.accel.angular.x, msg.accel.angular.y, msg.accel.angular.z]
-        self.logged_items['ee_wrench'] = [msg.wrench.force.x, msg.wrench.force.y, msg.wrench.force.z,
-                            msg.wrench.torque.x, msg.wrench.torque.y, msg.wrench.torque.z]
-        self.logged_items['ee_robot_wrench'] = [msg.robot_wrench.force.x, msg.robot_wrench.force.y, msg.robot_wrench.force.z,
-                            msg.robot_wrench.torque.x, msg.robot_wrench.torque.y, msg.robot_wrench.torque.z]
-        self.logged_items['ee_pose_eq'] = [msg.pose_eq.position.x, msg.pose_eq.position.y, msg.pose_eq.position.z,
-                            msg.pose_eq.orientation.x, msg.pose_eq.orientation.y,
-                            msg.pose_eq.orientation.z, msg.pose_eq.orientation.w]
-        self.logged_items['ee_vel_eq'] = [msg.twist_eq.linear.x, msg.twist_eq.linear.y, msg.twist_eq.linear.z,
-                        msg.twist_eq.angular.x, msg.twist_eq.angular.y, msg.twist_eq.angular.z]
-        self.logged_items['t_eq'] = [msg.t_eq]
-        
-        self.logged_items['stiffness'] = [msg.stiffness]
-        self.logged_items['damping'] = [msg.damping]
-        self.logged_items['user_intent'] = [msg.user_intent]
-
-        self.logged_items['mint_output'] = unpack_multiarray_msg(msg.icp_traj.model_output)
-        self.logged_items['icp_quantiles'] = unpack_multiarray_msg(msg.icp_traj.icp_quantiles)
-        self.logged_items['scores'] = unpack_multiarray_msg(msg.icp_traj.scores)
-        self.logged_items['cycle_time'] = [msg.cycle_time]
-        #self.logged_items['icp_alphas'] = list(msg.icp_traj.alphas)
-        return
-    '''
-
-    '''
-    def aciStateCallback(self, msg):
-        pred_len = msg.sample_number
-        aci_sample_list = msg.aci_batch
-        aci_quantiles_list = []
-        aci_alphas_list = []
-        aci_gammas_list = []
-        for idx in range(len(aci_sample_list)):
-            aci_quantiles_list.append(unpack_multiarray_msg(aci_sample_list[idx].quantiles))
-            aci_alphas_list.append(unpack_multiarray_msg(aci_sample_list[idx].alphas))
-            aci_gammas_list.append(aci_sample_list[idx].gammas)
-        #print(f"logger: recieved aci_quantiles list as:\n{aci_quantiles_list}")
-        self.logged_items['aci_quantiles'] = np.stack(aci_quantiles_list, axis=-1)
-        self.logged_items['aci_alphas'] = np.stack(aci_alphas_list, axis=-1)
-        self.logged_items['aci_gammas'] = np.stack(aci_gammas_list, axis=-1)
-        return
-    '''
-
-    '''
-    def admit_state_callback(self, msg):
-        self.desired_ee_pose = [msg.pose.position.x, msg.pose.position.y, msg.pose.position.z,
-                                msg.pose.orientation.x, msg.pose.orientation.y,
-                                msg.pose.orientation.z, msg.pose.orientation.w]
-        self.ref_pose = [msg.pose_eq.position.x, msg.pose_eq.position.y, msg.pose_eq.position.z,
-                         msg.pose_eq.orientation.x, msg.pose_eq.orientation.y,
-                         msg.pose_eq.orientation.z, msg.pose_eq.orientation.w]
-        self.ee_vel = [msg.twist.linear.x, msg.twist.linear.y, msg.twist.linear.z,
-                       msg.twist.angular.x, msg.twist.angular.y, msg.twist.angular.z]
-        self.ee_acc = [msg.accel.linear.x, msg.accel.linear.y, msg.accel.linear.z,
-                       msg.accel.angular.x, msg.accel.angular.y, msg.accel.angular.z]
-        self.int_force = [msg.wrench.force.x, msg.wrench.force.y, msg.wrench.force.z,
-                          msg.wrench.torque.x, msg.wrench.torque.y, msg.wrench.torque.z]
-        self.stiffness = list(msg.stiffness.data)
-        self.user_intent = [msg.user_intent]
-    '''
-    # Services Handlers - init, start, stop
-
-    '''
-    def old_handle_start_logging(self, req):
-        res = StartLoggingResponse()
-        # Determine the directory based on trial type and method
-        try:
-            ## 1. create the folder for logging if it doesn't exist
-            #home_directory = self.home_directory
-            current_directory = os.path.dirname(os.path.abspath(__file__))
-            parent_directory, _ = os.path.split(current_directory)
-            #data_directory = os.path.join(current_directory, 'DATA')
-            data_directory = os.path.join(parent_directory, 'DATA')
-            experiment_directory = os.path.join(data_directory, self.experiment_name) # save this one and on
-            subject_directory = os.path.join(experiment_directory, f'subject_{str(req.subject_num)}')
-            method_directory = os.path.join(subject_directory, str(req.trial_type))
-
-            # Create directories if they don't exist
-            for directory in [data_directory, experiment_directory, subject_directory, method_directory]:
-                print(f"checking directory {directory}...")
-                if not os.path.exists(directory):
-                    os.makedirs(directory)
-                    print(f"created {directory}!")
-                    os.chmod(directory, 0o777)  # Set full permissions
-
-            ## 2. create the file handle to the trial
-            trial_file_path = os.path.join(method_directory, f'trial_{str(req.trial_num)}.h5')
-            self.file_handle = h5py.File(trial_file_path, 'w')
-            self.data_group = self.file_handle.create_group("TrialData")
-
-            res.success = True
-            res.message = "Started Logging Successfully"
-        except Exception as e:
-            res.success = False
-            res.message = f"Failed to start logging{e}"
-            rospy.logerr(f"handle_start_logging: {e}")
-        finally:
-            self.start_time = time.time() if res.success else None
-
-        return res
-    '''

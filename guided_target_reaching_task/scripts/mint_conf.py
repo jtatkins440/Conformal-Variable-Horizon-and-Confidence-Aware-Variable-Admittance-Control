@@ -244,18 +244,6 @@ class MIntConf:
 
             safe_eq_time = self.mint_output_time_seq[quantile_index]
             quantile = quantile_seq[quantile_index]
-            '''
-            condition = ((quantile_seq - safe_eq_error_threshold) < 0.0)
-            
-            if len(condition) == 0:
-                safe_eq_time = 0.0
-                quantile_index = 0
-            else:
-                quantile_index = np.max(self.mint_output_time_seq[condition])
-                safe_eq_time = np.max(self.mint_output_time_seq[condition]) # gets the largest time that meets the condition
-            '''
-        #print(f"safe_eq_time: {safe_eq_time}")
-                
         return safe_eq_time, quantile, quantile_index
 
     ### publishers
@@ -272,7 +260,6 @@ class MIntConf:
         msg.scores = scores.tolist()
 
         msg.q_ratio = q_ratio
-        #msg.confidence = confidence
 
         pred_len = quantiles.shape[-1] # last dim is length, should have three
         aci_sample_list = []
@@ -358,7 +345,6 @@ class MIntConf:
     
     def setFixedSetpointHorizon(self, req): # setInt service
         res = SetFloatResponse()
-        # res.success is a bool, res.message is a string
         if (isinstance(req.data, float)):
             self.output_eq_sample_time = float(req.data)
             diff_time_seq = self.mint_output_time_seq - self.output_eq_sample_time
@@ -478,11 +464,9 @@ class MIntConf:
         return self.mem_buffer.getLastScore(), self.mem_buffer.isScoreBufferFull()
 
     # once we have enough scores, start computing quantiles and confidences
-    # if b_is_score_buffer_full
     def pipelineUpdateACIQuantiles(self, b_is_score_buffer_full):
         b_quantiles_ready = False
         if b_is_score_buffer_full:
-            #print(self.mem_buffer.score_buffer)
             _, _ = self.aci_helper.updateQuantiles(self.mem_buffer.score_buffer) #  updates internal values
             b_quantiles_ready = True
         aci_quantiles, aci_alphas = self.aci_helper.getQuantilesAndAlphas() # gives the initial values for the quantiles even if there's not enough values to compute anything correctly.
@@ -548,7 +532,6 @@ class MIntConf:
         state_dict["quantiles"], state_dict["alphas"], b_quantiles_ready = self.pipelineUpdateACIQuantiles(b_is_score_buffer_full)
 
         if b_quantiles_ready:
-            #print("quantiles ready!")
             state_dict['t_eq'], quantile, quantile_index = self.pipelineUpdateEquilibriumTime(state_dict["quantiles"])
             if self.b_use_variable_eq_horizon:
                 state_dict['q_ratio'] = 0.0

@@ -27,14 +27,6 @@ class GuidePointGenerator():
         self.dt = rospy.get_param("dt")
         self.rate = int(1.0 / self.dt)
 
-        '''
-        self.subscribers = {
-            'admit_record_state': rospy.Subscriber('admit_record_state', AdmitRecordStateStamped, self.admitRecordCallback, queue_size=1, tcp_nodelay=True),
-            'mint_conf_record_state': rospy.Subscriber('mint_conf_record_state', MIntConfRecordStateStamped, self.mintRecordCallback, queue_size=1, tcp_nodelay=True),
-            '/CurrentTargets': rospy.Subscriber('/CurrentTargets', Float64MultiArray, self.targetXY_callback, queue_size=1, tcp_nodelay=True)
-        }
-        '''
-
         self.guide_pub = rospy.Publisher('/GuideTargets', GuideState, queue_size=10)
 
         ##
@@ -86,16 +78,10 @@ class GuidePointGenerator():
 
     def handle_set_guide_time(self, req):
         res = SetFloatResponse()
-        '''
-            Can add future functionality here
-        '''
-        #self.target_count = req.data
         self.guide_time = req.data
         res.success = True
         res.message = f"GUI: Guide Time changed to {self.guide_time}!"
         self.dsdt = (1.0 - 0.0) / self.guide_time
-        #self.error_bar_active = False
-        #self.in_pretrial = True
         return res
     
     def handle_start_guiding(self, req):
@@ -115,8 +101,6 @@ class GuidePointGenerator():
 
     def getSPointArray(self, diff_time):
         s_times = np.clip((self.pred_times + diff_time) / self.guide_time, 0.0, 1.0) * np.array(self.active_coord)
-        #print(type(s_times)) # self.active_coord
-        #print(s_times)
         return s_times
 
     def getGuidePointArray(self, s_points):
@@ -127,16 +111,8 @@ class GuidePointGenerator():
 
         return spline_points, spline_point_vels
 
-        #self.current_guide_point[0] = spline_point[0]
-        #self.current_guide_point[1] = spline_point[1]
-
-        #self.current_guide_point_vel[0] = spline_point_vel[0] * self.dsdt
-        #self.current_guide_point_vel[1] = spline_point_vel[1] * self.dsdt # last part scales it to time domain. dx/ds * ds/dt = dx/dt
-
-
     def updateCurrentGuidePoint(self):
         if self.in_pretrial:
-            #s_point = 0.000001
             self.countdown_time = self.guide_time
             self.active_coord = 0.0
             s_point_array = self.getSPointArray(0.0)
@@ -144,9 +120,7 @@ class GuidePointGenerator():
             self.active_coord = 1.0
             diff_time = time.time() - self.start_time
             self.countdown_time = self.guide_time - diff_time
-            #s_point = diff_time / self.guide_time
             s_point_array = self.getSPointArray(diff_time)
-            #if 1.0 < s_point:
             if (s_point_array[0] == 1.0):
                 self.countdown_time = 0.0
                 self.active_coord = 0.0
@@ -174,24 +148,20 @@ class GuidePointGenerator():
         msg.vel_x = self.guide_points_vel[1,:].tolist()
         msg.vel_y = self.guide_points_vel[0,:].tolist()
 
-        #print(msg)
         self.guide_pub.publish(msg)
         return
     
-#from multiprocessing import Process
 def main():
     nh = rospy.init_node('guide_node')
  
     guide_node = GuidePointGenerator(nh)
 
     rate = rospy.Rate(guide_node.rate)
-    #vis_process.start()
     while not rospy.is_shutdown():
 
         guide_node.updateCurrentGuidePoint()
         guide_node.publishCurrentGuidePoint()
         rate.sleep()
-    #vis_process.join()
     plt.close()
 
 if __name__ == '__main__':

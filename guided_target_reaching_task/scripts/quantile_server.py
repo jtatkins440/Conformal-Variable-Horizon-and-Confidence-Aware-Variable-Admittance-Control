@@ -42,7 +42,6 @@ class QuantileServer:
 	
 	def getUserIntent(self, trial_folder_path):
 		trial_files = find('*.h5', trial_folder_path)
-		#print(f"trial_files: {trial_files}")
 		print(f"Quantile Server: Found {len(trial_files)} trials in directory {trial_folder_path}...")
 
 		if len(trial_files) == 0:
@@ -52,16 +51,13 @@ class QuantileServer:
 		ui_list = []
 		for trial_file in trial_files:
 			f = h5py.File(trial_file, 'r')
-			#print(f.keys())
 			fs = f['TrialData']
-			#print(fs.keys())
 			trial_ui = fs['user_intent'] # h5 dataset object
 			ui_list.append(np.array(trial_ui))
 		user_intent_array = np.concatenate(ui_list, axis=0)
 		return user_intent_array
 
 	def computeQuantiles(self, scores_array, alphas):
-		#quantile_array = compute_quantiles(scores_array, alphas) # don't need to use the optimized version for speed reasons. Need it for consistent ouptut sizes.
 		quantile_array = compute_quantiles_njit(scores_array, alphas)
 		return quantile_array
 
@@ -74,7 +70,7 @@ class QuantileServer:
 							input_window_length = input_window_length, local_cov_half_window = local_cov_half_window)
 		
 		last_gamma_mid = gamma_boundary[0].copy()
-		gamma_mid = np.mean(gamma_boundary) #(gamma_max - gamma_min) / 2.0
+		gamma_mid = np.mean(gamma_boundary)
 		last_gamma_change_mag = np.linalg.norm(gamma_mid - last_gamma_mid)
 		for i in range(max_iter_num):
 			
@@ -122,8 +118,6 @@ class QuantileServer:
 			for g_idx in range(len(step_sizes)):
 				performace[g_idx] = compute_mean_absolute_coverage_error_njit(scores, target_alpha, step_sizes[g_idx], avg_window_size,
 						input_window_length = input_window_length, local_cov_half_window = local_cov_half_window)
-			#print(f"performace: {performace}")
-			#print(f"step_sizes: {step_sizes}")
 			best_particle_idx = np.argmin(performace)
 			particle_dist = (step_sizes[best_particle_idx] - step_sizes) # could impliment early stopping with this if needed
 
@@ -208,7 +202,7 @@ class ROSQuantileServer:
 	
 	def main(self, quant_rate = 100.0):
 		rate = rospy.Rate(quant_rate)
-		while True: #not rospy.is_shutdown:
+		while True: 
 			rate.sleep()
 
 import time

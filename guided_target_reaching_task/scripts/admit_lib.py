@@ -24,7 +24,7 @@ class AdditiveMaskModule(nn.Module):
         super(AdditiveMaskModule, self).__init__()
         # takes whole input and passes it to unique layers and appends the outputs, no sharing
         self.mask = nn.parameter.Parameter(mask_initial_weight * torch.ones(mask_size))
-        self.act = nn.Hardtanh() #nn.Softmax(dim=1)
+        self.act = nn.Hardtanh()
 
     def forward(self, input):
         masked_input = self.act(self.mask) * input
@@ -40,7 +40,7 @@ class LinearMaskModule(nn.Module):
 
     def forward(self, input):
         mask = self.mask(input)
-        output = torch.mul(self.act(mask), input) # self.act(mask)+ input
+        output = torch.mul(self.act(mask), input) 
         return output
 
 class LinearResModule(nn.Module):
@@ -52,7 +52,7 @@ class LinearResModule(nn.Module):
 
     def forward(self, input):
         mask = self.mask(input)
-        output = self.act(mask) + input # self.act(mask)+ input
+        output = self.act(mask) + input 
         return output
  
 class SequentialLinear(nn.Module):
@@ -118,7 +118,7 @@ class MIntNet_Double_Conditioner_Acc(nn.Module):
         output_length = len(output_idx_seq)
         self.output_len = output_length
         self.pred_length = output_length - 1
-        decoder_num = self.output_len #self.pred_length
+        decoder_num = self.output_len 
         
 
         seq_flat_feature_size = latent_features * latent_size
@@ -139,9 +139,9 @@ class MIntNet_Double_Conditioner_Acc(nn.Module):
     def train_encoder(self, pos, vel_seq, acc_seq):
         pos_proj = self.pos_proj(pos) # N x 2 - > N x p_lat x 1
         pos_proj_seq_ = pos_proj.unsqueeze(-1)
-        #pos_proj_seq = torch.swapaxes(pos_proj_seq.expand(-1, pos_proj.size()[1], vel_seq.size()[-1]), -2, -1)
+
         pos_proj_seq = pos_proj_seq_.expand(-1, pos_proj.size()[1], vel_seq.size()[-1])
-        #print(pos_proj_seq.size())
+
         vel_proj_seq = self.vel_proj(vel_seq)
         acc_proj_seq = self.acc_proj(acc_seq)
 
@@ -172,8 +172,7 @@ class MIntNet_Double_Conditioner_Acc(nn.Module):
 
     def computePosVelFromAccSeq(self, initial_full_state, acc_output):
         traj_list = [torch.cat([initial_full_state[:,0:4], acc_output[:,:,0]], dim=1)]
-        #traj_list[0][:,4:6] = acc_output[:,:,0] # overwrite current acc with initial predicted acc
-        #for t_idx in range(1, self.pred_length):
+
         for t_idx in range(1, self.output_len):
             traj_acc = traj_list[t_idx-1][:, 4:6]
             traj_vel = traj_list[t_idx-1][:, 2:4] + traj_acc * self.output_dt
@@ -188,9 +187,8 @@ class MIntNet_Double_Conditioner_Acc(nn.Module):
 
         lat_seq, state_proj = self.train_encoder(pos, vel_seq, acc_seq)
         acc_output_seq = self.train_decode_acc_seq(lat_seq, state_proj)
-        #print(f"vec_output_seq.size: {vec_output_seq.size()}")
         output = self.computePosVelFromAccSeq(input[:, :, -1], acc_output_seq)
-        #print(f"output.size: {output.size()}")
+
         return output
 
 
@@ -538,7 +536,6 @@ class ConfidenceUserIntentImpedanceUpdateRule(object):
 
     def adjustVariableVelStiffness(self, user_intent):
         if (0.0 <= user_intent):
-            #new_stiffness = (self.vac_k_ub) / (1.0 + np.exp(- self.vac_r * user_intent + self.vac_delta))
             new_stiffness = (self.k_d_ub) / (1.0 + np.exp(-self.k_p * user_intent))
         else:
             new_stiffness = 0.0 # if there's negative intent, don't apply asssistance force.
@@ -550,18 +547,15 @@ class ConfidenceUserIntentImpedanceUpdateRule(object):
         elif self.max_user_intent < user_intent:
             user_intent = self.max_user_intent
     
-        #B = interp(x, self.b_lb, self.adjustVariableDamping(user_intent)) # use this if we want to couple confidence and basic damping. I think it makes sense to leave them unconnected.
         B = interp(x, self.b_lb, self.adjustVariableDamping(user_intent)) # 
         K_p = interp(x, self.k_p_lb, self.adjustVariableStiffness(user_intent))
         K_d = interp(x, self.k_d_lb, self.adjustVariableVelStiffness(user_intent))
-        #K_p = interp(x, self.k_p_lb, self.k_p_ub)
-        #K_d = interp(x, self.k_d_lb, self.k_p_ub)
         return B, K_p, K_d
     
 class AdaptiveConformalPredictionHelper:
     def __init__(self, target_alpha = 0.1, prediction_length = 6, step_sizes=[0.0, 0.001, 0.005], window_length=1, init_quantiles = None, use_jit = True, use_parallel = True):
         
-        self.prediction_length = prediction_length # maybe don't need this as class member
+        self.prediction_length = prediction_length 
         self.step_sizes_list = step_sizes
         self.target_alphas_list = [target_alpha for g in range(len(step_sizes))]
         self.window_length = window_length
@@ -576,7 +570,6 @@ class AdaptiveConformalPredictionHelper:
         for t_idx in range(0, self.prediction_length):
             self.current_alphas_array[:, t_idx] = self.target_alphas_array.copy()
             self.step_sizes_array[:, t_idx] = np.array(self.step_sizes_list)
-            #self.quantiles_array[:, t_idx] = self.target_alphas_array.copy() # leave as zeros
 
         if self.use_jit: # need to initalize it
             print(f"AdaptiveConformalPredictionHelper: Using JIT, parallel={self.use_parallel}! Initalizing JIT function...")
@@ -593,7 +586,6 @@ class AdaptiveConformalPredictionHelper:
         return
 
     def updateStepSizes(self, new_step_sizes):
-        #raise NotImplementedError
         
         for t_idx in range(0, self.prediction_length):
             self.step_sizes_array[:, t_idx] = np.array(new_step_sizes[:, t_idx])
@@ -695,9 +687,9 @@ class SimulatedSubject:
         self.error_derivative_vec = np.zeros(shape=(self.state_dim,))
         self.error_integral_vec = np.zeros(shape=(self.state_dim,))
         # control gains
-        self.P_gain = 100.0 #20.0
-        self.D_gain = 20.0 #1.0
-        self.I_gain = 0.0 #0.5
+        self.P_gain = 100.0
+        self.D_gain = 20.0
+        self.I_gain = 0.0
     def refreshErrorSignals(self):
         self.error_vec = np.zeros(shape=(self.state_dim,))
         self.error_derivative_vec = np.zeros(shape=(self.state_dim,))
@@ -755,8 +747,6 @@ class ModelInferenceWrapperAcceleration(): ## NEURAL MODEL THAT PREDICTS ACCELER
         print(f"NN Model Output Time Sequence: {self.output_time_seq}")
         self.base_big_dt = self.output_time_seq[1] - self.output_time_seq[0]
         self.dense_output_time_seq = np.arange(np.min(self.output_time_seq), np.max(self.output_time_seq) + self.base_dt, self.base_dt)
-        #print(f"Output time sequence: \n{self.output_time_seq}")
-        #print(f"Dense output time sequence: \n{self.dense_output_time_seq}")
         self.last_output_poly = None
         self.last_output_dpoly = None
 
@@ -863,7 +853,7 @@ class RegModelInferenceWrapper(): # REGRESSION MODEL
         
         self.input_channels = model_params['input_channels']
         self.input_idx_seq = model_params['input_idx_seq']
-        self.input_time_seq = [idx * base_dt for idx in self.input_idx_seq] #self.input_idx_seq * base_dt
+        self.input_time_seq = [idx * base_dt for idx in self.input_idx_seq] 
         self.input_time_array = np.array(self.input_time_seq)
 
         self.output_channels = model_params['output_channels']
@@ -886,7 +876,6 @@ class RegModelInferenceWrapper(): # REGRESSION MODEL
     def _makeModelPipeline(self):
         model = Pipeline([('poly', PolynomialFeatures(degree=self.poly_degree)),
                   ('linear', LinearRegression(fit_intercept=False))]) # intercept is generated by PolynomialFeatures
-        #model = Pipeline([('linear', LinearRegression(fit_intercept=True))]) # intercept is generated by PolynomialFeatures
         return model
 
     def predict(self, input, b_correct_initial_offset = True):

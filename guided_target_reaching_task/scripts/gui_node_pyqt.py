@@ -100,34 +100,17 @@ class StandaloneVisualizerApp(QtWidgets.QMainWindow):
         self.timer_text_item.setPos(0.1, -0.1)
         self.graphWidget.addItem(self.timer_text_item)
 
-        
-        '''
-        text = pg.TextItem(html='<div style="text-align: center"><span style="color: #FFF;">This is the</span><br><span style="color: #FF0; font-size: 16pt;">PEAK</span></div>', anchor=(-0.3,0.5), angle=45, border='w', fill=(0, 0, 255, 100))
-        '''
-        
-        #text = pg.TextItem(html=, anchor=(0,0))
-        
-        
-        
-        #self.timer_label_item = pg.TextItem(text="TESTING")
-        #self.timer_label_item.setTextWidth(40)
-        #self.graphWidget.addItem(self.timer_label_item)
-
         # plotdataitems for the bar graphs
         self.barItemPos = self.barWidget.plot([], [], pen=pg.mkPen('r', width=10))
         self.barItemVel = self.barWidget.plot([], [], pen=pg.mkPen('r', width=10), symbolBrush='r')
 
-        #self.error_bar = pg.BarGraphItem(x=[0, 1], height=[0.0, 0.0], width=0.03)
-        #self.error_bar_view_widget = 
-
         self.point_num = 6 # was 5
-        #self.mint_pred_plot_list = [self.graphWidget.plot([], [], symbol='o',pen=None, symbolBrush=(183, 0, 255, 0.0), symbolSize=25) for i in range(0, point_num)] #rgba(183, 0, 255, 0.8)
+
         self.mint_pred_plot_list = [self.graphWidget.plot([], [], pen=pg.mkPen('k', width=4)) for i in range(0, self.point_num)] #rgba(183, 0, 255, 0.8)
         self.mint_pred_plot = self.graphWidget.plot([], [], pen=pg.mkPen('k', width=self.pen_width))
 
         rgba = (100, 0, 0, 50)
         self.quantile_brush = pg.mkBrush(rgba)
-        #self.quantile_plot_list = [self.graphWidget.plot([], [], symbol='o', pen=None, symbolBrush='r', symbolSize=0.1, pxMode=False) for i in range(0, self.point_num)]
         self.quantile_plot = self.graphWidget.plot([], [], symbol='o', pen=None, symbolBrush='r', symbolSize=0.1, pxMode=False)
 
         # Set plot limits
@@ -140,8 +123,6 @@ class StandaloneVisualizerApp(QtWidgets.QMainWindow):
         ## ROS 
         # subscribers
         self.srv_start_visualizing = rospy.Service('start_visualizing', SetBool, self.handle_visualize)
-        #self.srv_set_guide_time = rospy.Service('set_guide_time', SetFloat, self.handle_set_guide_time)
-        #self.srv_start_guiding = rospy.Service('start_guiding', SetFloat, self.handle_start_guiding)
         self.srv_new_trial = rospy.Service('new_trial', SetInt, self.handle_new_trial)
         self.srv_update_targets = rospy.Service('update_targets', UpdateTargets, self.update_targets)
 
@@ -154,21 +135,12 @@ class StandaloneVisualizerApp(QtWidgets.QMainWindow):
             '/CurrentTargets': rospy.Subscriber('/CurrentTargets', Float64MultiArray, self.targetXY_callback, queue_size=1, tcp_nodelay=True),
             '/GuideTargets': rospy.Subscriber('/GuideTargets', GuideState, self.guideCallback, queue_size=1, tcp_nodelay=True)
         }
-
-
-        #self.guide_pub = rospy.Publisher('/GuideTargets', Float64MultiArray, queue_size=10)
-
-        #self.sub_admit_state = rospy.Subscriber('/iiwa/admit_state', AdmitStateStamped, self.endEffectorXY_callback)
-        #self.sub_full_fit = rospy.Subscriber('/full_fit_io', FullFitIO, self.fullFitIO_callback)
-
-        # admitRecordCallback, mintRecordCallback
         
         ##
         # initial vectors
         # Global variables
         self.targetXYold = np.zeros(2)
         self.targetXY = np.zeros(2)
-        #self.endEffectorXY = np.array([[0.0], [0.0]])
         self.endEffectorXY = np.array([0.0, 0.0])
         self.ee_eq_pose = np.array([0.0,0.0])
         self.pred_pos = np.array([[0.0, 0.0, 0.0, 0.0, 0.0, 0.0], [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]])
@@ -222,8 +194,6 @@ class StandaloneVisualizerApp(QtWidgets.QMainWindow):
 
     def getHTMLTimeString(self, disp_time):
             countdown_string = "{:.1f}s".format(disp_time)
-            #text_color =  "#000000"
-            #html_string = '<div style="text-align: center"><span style="color: {}; font-size: 16pt">Trial Time:</span><br><span style="color: {}; font-size: 16pt;">{}</span></div>'.format(text_color, text_color, countdown_string)
             html_string = f'<div style="text-align: center"><span style="color: {self.timer_text_color}; font-size: {self.timer_text_font_size}pt">Trial Time:</span><br><span style="color: {self.timer_text_color}; font-size: {self.timer_clock_font_size}pt;">{countdown_string}</span></div>'
             return html_string
 
@@ -250,11 +220,6 @@ class StandaloneVisualizerApp(QtWidgets.QMainWindow):
         dir_mag = np.linalg.norm(arrow_direction)
         if min_dir_mag < dir_mag:
             arrow_dir = arrow_direction / dir_mag
-            '''
-            vec_ang = np.arcsin(np.linalg.det(np.stack([base_arrow_dir, arrow_dir], axis=1)))
-            rot_mat = rotmat_2d(vec_ang)
-            rot_arrow = np.matmul(rot_mat, base_arrow_copy)
-            '''
             rot_arrow = self.getArrowArray(arrow_dir, self.arrow_l,self.arrow_w, self.arrow_h)
             return rot_arrow + start_point[:, np.newaxis]
         else:
@@ -280,7 +245,6 @@ class StandaloneVisualizerApp(QtWidgets.QMainWindow):
         self.endEffectorXY[1] = abs_pose[0]
 
         #print(f"self.endEffectorXY: {self.endEffectorXY}")
-        #self.ee_eq_pose
         max_eq_distance = 0.05
         temp_data = np.array([msg.eq_state.position.x, msg.eq_state.position.y, msg.eq_state.position.z])# - self.initial_pose
         self.ee_eq_pose[0] = temp_data[2]
@@ -340,10 +304,7 @@ class StandaloneVisualizerApp(QtWidgets.QMainWindow):
             aci_quantiles_list.append(unpack_multiarray_msg(aci_sample_list[idx].quantiles))
             aci_alphas_list.append(unpack_multiarray_msg(aci_sample_list[idx].alphas))
             aci_gammas_list.append(aci_sample_list[idx].gammas)
-        #print(f"logger: recieved aci_quantiles list as:\n{aci_quantiles_list}")
         self.quantiles = np.stack(aci_quantiles_list, axis=-1)
-        #self.logged_items['aci_alphas'] = np.stack(aci_alphas_list, axis=-1)
-        #self.logged_items['aci_gammas'] = np.stack(aci_gammas_list, axis=-1)
         return
     
     def guideCallback(self, msg):
@@ -373,9 +334,7 @@ class StandaloneVisualizerApp(QtWidgets.QMainWindow):
     def getQuantilePoints(self):
         q_sizes = 1 #
         if self.quantiles is not None:
-            #print(f"shape of quantiles: {self.quantiles.shape}")
             q_sizes = self.quantiles[0,0,:].tolist()
-            #print(f"q_sizes: {q_sizes}")
         return q_sizes
 
     def handle_new_trial(self, msg):
@@ -387,40 +346,8 @@ class StandaloneVisualizerApp(QtWidgets.QMainWindow):
         self.in_pretrial = False
         return res
 
-    '''
-    def handle_set_guide_time(self, req):
-        res = SetFloatResponse()
-
-        #self.target_count = req.data
-        self.guide_time = req.data
-        res.success = True
-        res.message = f"GUI: Guide Time changed to {self.guide_time}!"
-        self.error_bar_active = True
-        self.in_pretrial = False
-        #print(res.message)
-        
-        return res
-    '''
-    
-    '''
-    def handle_start_guiding(self, req):
-        res = SetFloatResponse()
-        #self.target_count = req.data
-        #self.guide_time = req.data
-        res.success = True
-        res.message = "GUI: Guiding Started!"
-        self.error_bar_active = True
-        self.in_pretrial = False
-        #print(res.message)
-        
-        return res
-    '''
-
     def update_targets(self, req):
         self.targets = np.column_stack((req.x, req.y))
-        #is_zero = np.all(self.targets == np.zeros((6, 2)))
-        #if is_zero:
-        #    return UpdateTargetsResponse(success=False)
         self.error_bar_active = False
         self.in_pretrial = True
         return UpdateTargetsResponse(success=True)
@@ -471,9 +398,6 @@ class StandaloneVisualizerApp(QtWidgets.QMainWindow):
             if spline_points is not None:
                 self.splinePlot.setData(spline_points[0], spline_points[1])
 
-            #self.barItem.height = [self.tracking_error_mag, self.tracking_error_mag]
-
-
             self.barItemPos.setData([0.0, 0.0, 0.01, 0.01, 0.0], [0.0, self.tracking_error_mag, self.tracking_error_mag, 0.0, 0.0])
             err_col = self.getErrorColor(self.tracking_error_mag)
             self.barItemPos.setPen(pg.mkPen(err_col))
@@ -491,38 +415,16 @@ class StandaloneVisualizerApp(QtWidgets.QMainWindow):
             interp_time_start = time.time()
             self.tck, u = interpolate.splprep([self.targets[:,0], self.targets[:,1]], s=0)
             
-            #print(tck)
-            #unew = np.linspace(0, 1, 10000)
             unew = np.linspace(0, 1, 1000)
             spline_points = interpolate.splev(unew, self.tck)
-            #print(f"vis interpolation time: {time.time() - interp_time_start}")
 
             #global spline_points
             if (self.new_trial == 1) and not np.array_equal(self.targetXY, np.zeros(2)):
                 self.current_guide_point = np.array([0.0, 0.0])
                 self.start_time = time.time()
-                #s_point = (time.time() - start_time) / self.guide_time
                 self.new_trial = -1
                 self.error_bar_active = True
             self.tracking_error_mag = np.linalg.norm(self.endEffectorXY - self.current_guide_point)
-            
-
-            #s_point = (time.time() - start_time) / self.guide_time
-            #if (self.target_count < 6) and (self.new_trial == -1):
-            '''
-            if (self.new_trial == -1):
-                s_point = (time.time() - self.start_time) / self.guide_time
-                if 1.0 < s_point:
-                    s_point = 1.0
-
-                spline_point = interpolate.splev(s_point, self.tck)
-
-                self.current_guide_point[0] = spline_point[0]
-                self.current_guide_point[1] = spline_point[1]
-            else:
-                self.current_guide_point[0] = 0.0
-                self.current_guide_point[1] = 0.0
-            '''
 
         # Target points
         target_points = (self.targets[:, 0], self.targets[:, 1])
@@ -532,7 +434,6 @@ class StandaloneVisualizerApp(QtWidgets.QMainWindow):
         end_effector = (self.endEffectorXY[0], self.endEffectorXY[1])
 
         # Update plot
-        #self.update_plot(target_points, current_target, end_effector, guideXY, self.ee_eq_pose, self.pred_pos, spline_points)
         self.update_plot(target_points, current_target, end_effector, self.current_guide_point, self.ee_eq_pose, self.pred_pos, spline_points)
         app.processEvents() 
     
@@ -554,7 +455,6 @@ class StandaloneVisualizerApp(QtWidgets.QMainWindow):
         
 
         spline_point = interpolate.splev(s_point, self.tck)
-        #print(f"interpolation tck: {self.tck}")
         print(f"interpolation tck length: {len(self.tck)}")
         for i in range(len(self.tck)):
             print(f"interpolation tck {i}: {self.tck[i]}")
@@ -570,38 +470,6 @@ class StandaloneVisualizerApp(QtWidgets.QMainWindow):
         self.current_guide_point_vel[1] = spline_point_vel[1]
 
         return 
-        '''
-        if (self.new_trial == -1):
-            s_point = (time.time() - self.start_time) / self.guide_time
-            if 1.0 < s_point:
-                s_point = 1.0
-
-            spline_point = interpolate.splev(s_point, self.tck)
-            spline_point_vel = interpolate.splev(s_point, self.tck, der=1)
-
-            self.current_guide_point[0] = spline_point[0]
-            self.current_guide_point[1] = spline_point[1]
-
-            self.current_guide_point_vel[0] = spline_point_vel[0]
-            self.current_guide_point_vel[1] = spline_point_vel[1]
-
-            if self.error_bar_active:
-                self.tracking_error_mag = np.linalg.norm(self.endEffectorXY - self.current_guide_point)
-            else:
-                self.tracking_error_mag = 0.0
-        else:
-            self.current_guide_point[0] = 0.0
-            self.current_guide_point[1] = 0.0
-
-            self.tracking_error_mag = 0.0
-        '''
-        return
-
-    #def publishCurrentGuidePoint(self):
-    #    guide_msg = Float64MultiArray()
-    #    guide_msg.data = [self.current_guide_point[0], self.current_guide_point[1]]
-    #    self.guide_pub.publish(guide_msg)
-    #    return
 
     def visualizerLoop(self, app, vis_rate_dt):
         vis_process = Process(target=self.visualize, args=(app,))
@@ -619,12 +487,10 @@ class StandaloneVisualizerApp(QtWidgets.QMainWindow):
 
 #from multiprocessing import Process
 def main():
-    nh = rospy.init_node('visualizer_py')
- 
-    # rospy.Subscriber('/ee_pose_eq', PoseStamped, ee_eq_pose_callback)
-    # rospy.Subscriber('/iiwa/j6_pose_custom', Float64MultiArray, endEffectorXY_callback) # --> For simulation
-    # rospy.Subscriber('/TrialTargets', Float64MultiArray, targets_callback)
     # Initialize the service
+    nh = rospy.init_node('visualizer_py')
+
+   
 
     rangex_ = -0.18
     rangex = 0.18
@@ -642,8 +508,6 @@ def main():
     vis_rate_dt = 1.0 / vis_rate
 
     vis_time_start = time.time()
-
-    #vis_process = Process(target=window.visualizerLoop, args=(app, vis_rate_dt,))
 
     #vis_process.start()
     while not rospy.is_shutdown():

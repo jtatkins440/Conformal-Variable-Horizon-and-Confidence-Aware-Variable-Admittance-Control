@@ -85,24 +85,21 @@ def generate_session_group(session_configs, case_configs, shuffle_blocks = False
             
             trial_order = [i for i in range(trial_num_per_block)]
             if shuffle_trials: random.shuffle(trial_order)
-            #print(f"Block {b_idx}: Trial Order: {trial_order}")
             block_pathlist = []
             block_trial_index = []
             for t_idx in range(trial_num_per_block):
                 block_pathlist.append(trial_pathlist[trial_order[t_idx]])
 
-                #block_trial_index.append(global_trial_index_deque_dict[b_idx].popleft())
                 block_trial_index.append(t_idx)
 
             block_case_config = case_configs[block_order[b_idx]]
             if override_cases_data_by_session_info:
                 block_case_config["trial_time_length"] = session_configs[s_idx]["trial_time_length"]
             
-            #print(block_trial_index)
+
             block_group[b_idx] = {"case": block_case_config, "trials": block_pathlist, "trial_index": block_trial_index, "session_label" : session_configs[s_idx]["label"], "session_trial_time" : session_configs[s_idx]["trial_time_length"]}
-        #print(block_group)
+
         session_group[s_idx] = block_group
-    #print(session_group)
     return session_group
 
 if __name__ == '__main__':
@@ -123,7 +120,6 @@ if __name__ == '__main__':
         if not os.path.exists(directory):
             os.makedirs(directory)
             print(f"created {directory}!")
-            #os.chmod(directory, 0o777)  # Set full permissions
 
     os.chmod(resources_directory, 0o777)  # Set full permissions
     

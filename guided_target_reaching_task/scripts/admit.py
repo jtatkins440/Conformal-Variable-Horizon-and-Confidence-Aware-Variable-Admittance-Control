@@ -5,9 +5,9 @@ import rospy
 from std_msgs.msg import String
 from std_msgs.msg import MultiArrayDimension
 from geometry_msgs.msg import WrenchStamped, Quaternion, PoseStamped, Pose, TwistStamped, Point
-from conf_exps.msg import * #AdmitStateStamped, RecordStateStamped
-from conf_exps.srv import * # SetInt and others
-from std_srvs.srv import * # SetBool
+from conf_exps.msg import * 
+from conf_exps.srv import * 
+from std_srvs.srv import * 
 import numpy as np
 from collections import deque
 import time
@@ -85,12 +85,11 @@ class Admit:
 
         # high level state behavior flags, not members of class as these are mostly for debugging
         self.b_check_if_interacting = True
-        self.b_use_meas_acc_for_intent = False #True #False #True
-        self.b_use_meas_acc_for_prediction = False #False #True
-        self.b_limit_robot_force_by_measured_force = False #True
-        self.b_use_cosystem_for_prediction = False #True #False #True #False #True #True #False #True #False #True #False #True #True #True #True # THIS MASSIVELY IMPROVED STABILITY OF PREDICTIONS, but gave us other issues...
-        self.b_realign_cosystem = False #True
-        self.measured_force_mult = 10.0 #1.0
+        self.b_use_meas_acc_for_intent = False 
+        self.b_use_meas_acc_for_prediction = False 
+        self.b_limit_robot_force_by_measured_force = False 
+        self.b_realign_cosystem = False 
+        self.measured_force_mult = 10.0 
 
         # initial state dict
         self.initial_state_dict = {'pos' : np.zeros(shape=(pos_dim,)),
@@ -112,14 +111,10 @@ class Admit:
                 'K_d': 0.0}
         self.raw_q_ratio = 1.0
 
-        if self.b_use_cosystem_for_prediction:
-            full_state_box_bound = None
-        else:
-            full_state_box_bound = [rospy.get_param("safety/pos_bound"), rospy.get_param("safety/pos_bound"),
-                                    rospy.get_param("safety/vel_max"), rospy.get_param("safety/vel_max"),
-                                    rospy.get_param("safety/acc_max"), rospy.get_param("safety/acc_max")]
+        full_state_box_bound = [rospy.get_param("safety/pos_bound"), rospy.get_param("safety/pos_bound"),
+                                rospy.get_param("safety/vel_max"), rospy.get_param("safety/vel_max"),
+                                rospy.get_param("safety/acc_max"), rospy.get_param("safety/acc_max")]
         # safety filter dict
-
         self.safety_dict = {'pos': {'box_bound': rospy.get_param("safety/pos_bound"), 'mag_bound': None, 'diff_bound': None, 'apply_filter': False},
             'vel': {'box_bound': None, 'mag_bound': rospy.get_param("safety/vel_max"), 'diff_bound': None, 'apply_filter': False},
             'acc': {'box_bound': None, 'mag_bound': rospy.get_param("safety/acc_max"), 'diff_bound': None, 'apply_filter': False},
@@ -264,7 +259,6 @@ class Admit:
             self.raw_pos_eq[1] = msg.diff_position.z
             self.raw_vel_eq[0] = msg.diff_velocity.x
             self.raw_vel_eq[1] = msg.diff_velocity.z
-            #print(f"raw_pos_eq, diff: {self.raw_pos_eq}")
         else:
             self.raw_pos_eq[0] = msg.position.x
             self.raw_pos_eq[1] = msg.position.z
@@ -659,8 +653,8 @@ class Admit:
         state_dict["user_intent"] = self.enforceUserIntentLimits(np.dot(vel, acc))
         
         state_dict['full_state'][0:2] = pos
-        state_dict['full_state'][2:4] = vel # * float(b_remove_measured_force)
-        state_dict['full_state'][4:6] = acc # * float(b_remove_measured_force)
+        state_dict['full_state'][2:4] = vel 
+        state_dict['full_state'][4:6] = acc 
 
         state_dict = self.applySafetyFilters(state_dict, ['desired_pos', 'desired_vel', 'full_state', 'user_intent'])
 
@@ -680,7 +674,7 @@ class Admit:
             rollout_traj = self.computeRolloutTrajectory(self.prediction_times, state_dict['pos'], state_dict['vel'], state_dict['pos_eq'], state_dict['vel_eq'], state_dict['measured_force'])
 
             self.publishFullState(state_dict['full_state'], state_dict['desired_pos'], rollout_traj['pos'])
-            #self.publishFullState(state_dict['full_state'])
+
         
 
 
